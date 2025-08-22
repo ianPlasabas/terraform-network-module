@@ -1,14 +1,14 @@
 output "vpc_id" {
   description = "ID of VPC"
-  value       = { for key, value in aws_vpc.main : key => value.id }
+  value       = aws_vpc.main.id
 }
 
 output "vpc_arn" {
   description = "ARN of VPC"
-  value       = { for key, value in aws_vpc.main : key => value.arn }
+  value       = aws_vpc.main.arn
 }
 
 output "vpc_cidr" {
   description = "CIDR of VPC"
-  value       = { for key, value in aws_vpc.main : key => value.cidr }
+  value       = aws_vpc.main.cidr_block
 }
