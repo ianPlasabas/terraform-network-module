@@ -3,6 +3,7 @@ resource "aws_vpc" "main" {
   instance_tenancy     = var.tenancy
   enable_dns_support   = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
+  tags                 = var.vpc_tags
 }
 
 resource "aws_subnet" "private_main" {

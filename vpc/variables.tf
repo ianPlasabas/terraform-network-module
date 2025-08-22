@@ -22,6 +22,12 @@ variable "enable_dns_hostnames" {
   default     = true
 }
 
+variable "vpc_tags" {
+  description = "Tags for VPC"
+  type        = map(string)
+  default     = {}
+}
+
 variable "private_subnet" {
   description = "Map object for private subnet/s"
   type        = map(string)
