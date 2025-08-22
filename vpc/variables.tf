@@ -24,8 +24,6 @@ variable "enable_dns_hostnames" {
 
 variable "private_subnet" {
   description = "Map object for private subnet/s"
-  type = map(object({
-    cidr_block = string
-  }))
+  type = map(string)
   default = {}
 }
