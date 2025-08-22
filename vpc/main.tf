@@ -6,19 +6,28 @@ resource "aws_vpc" "main" {
   tags                 = var.vpc_tags
 }
 
-resource "aws_subnet" "private_main" {
-  for_each          = var.private_subnet
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = each.value
-  availability_zone = each.key
-  tags              = var.private_main_tags
-}
-
-resource "aws_subnet" "public_main" {
-  for_each                = var.public_subnet
+resource "aws_subnet" "web" {
+  for_each                = var.web
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = each.key
   map_public_ip_on_launch = true
-  tags                    = var.public_main_tags
+  tags                    = var.web_tags
 }
+
+resource "aws_subnet" "app" {
+  for_each          = var.app
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value
+  availability_zone = each.key
+  tags              = var.app_tags
+}
+
+resource "aws_subnet" "db" {
+  for_each          = var.db
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value
+  availability_zone = each.key
+  tags              = var.db_tags
+}
+
