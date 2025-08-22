@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "private_main" {
   for_each   = var.private_subnet
   vpc_id     = aws_vpc.main.id
-  cidr_block = each.value.cidr_block
+  cidr_block = each.value
 
   tags = {
     Name = "Main"
