@@ -34,8 +34,20 @@ variable "private_subnet" {
   default     = {}
 }
 
+variable "private_main_tags" {
+  description = "Tags for private subnet"
+  type        = map(string)
+  default     = {}
+}
+
 variable "public_subnet" {
   description = "Map object for public subnet/s"
+  type        = map(string)
+  default     = {}
+}
+
+variable "public_main_tags" {
+  description = "Tags for public subnet"
   type        = map(string)
   default     = {}
 }
