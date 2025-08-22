@@ -1,6 +1,6 @@
-variable vpc_main {
+variable vpc {
   type        = map(object({
-    vpc_cidr = string
+    cidr_block = string
     name_tag = string
   }))
   default={
