@@ -7,10 +7,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = var.subnets
+  for_each                = var.web
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = each.web.value
-  availability_zone       = each.web.key
+  cidr_block              = each.value
+  availability_zone       = each.key
   map_public_ip_on_launch = true
   tags                    = var.web_tags
 }
