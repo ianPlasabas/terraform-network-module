@@ -13,7 +13,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "web" {
   for_each                = zipmap(
     slice(data.aws_availability_zones.available.names, 0, length(var.web_subnet_cidrs)),
-    var.web_subnet_cidrs)
+    var.web)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = each.key
