@@ -4,9 +4,9 @@ data "aws_availability_zones" "available" {
 
 locals {
   # Trim the list of AZs to match the number of CIDR blocks
-  limited_azs = slice(data.aws_availability_zones.available.names, 0, length(var.subnet_cidr_blocks))
+  limited_azs = slice(data.aws_availability_zones.available.names, 0, length(var.web))
   # Create a map pairing each CIDR with a specific AZ
-  subnet_config = zipmap(local.limited_azs, var.subnet_cidr_blocks)
+  subnet_config = zipmap(local.limited_azs, var.web)
 }
 
 
