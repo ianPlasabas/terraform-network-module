@@ -32,9 +32,9 @@ variable "vpc_tags" {
   default     = {}
 }
 
-variable "web" {
+variable "subnets" {
   description = "Map object for web subnet/s"
-  type        = map(string)
+  type        = map(object({}))
   default     = {}
 }
 
