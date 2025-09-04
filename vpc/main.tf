@@ -16,7 +16,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = tomap(var.web)
+  for_each                = toset(var.web)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = data.aws_availability_zones.available.names[each.key % length(data.aws_availability_zones.available.names)]
