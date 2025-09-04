@@ -28,7 +28,7 @@ variable "enable_dns_hostnames" {
 
 variable "vpc_tags" {
   description = "Tags for VPC"
-  type        = map(string)
+  type        = set(string)
   default     = {}
 }
 
