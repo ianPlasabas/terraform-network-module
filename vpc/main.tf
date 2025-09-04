@@ -1,3 +1,7 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_vpc" "main" {
   cidr_block           = var.cidr_block
   instance_tenancy     = var.tenancy
@@ -7,7 +11,9 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = tomap(var.web)
+  for_each                = zipmap(
+    slice(data.aws_availability_zones.available.names, 0, length(var.web_subnet_cidrs)),
+    var.web_subnet_cidrs)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = each.key
