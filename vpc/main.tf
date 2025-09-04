@@ -1,3 +1,10 @@
+locals {
+  web_subnets = zipmap(
+    data.aws_availability_zones.available.names,
+    var.web
+  )
+}
+
 resource "aws_vpc" "main" {
   cidr_block           = var.cidr_block
   instance_tenancy     = var.tenancy
