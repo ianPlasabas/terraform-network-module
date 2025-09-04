@@ -11,16 +11,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = {
-    for idx, cidr in var.web :
-    idx => {
-      cidr = cidr
-      az   = data.aws_availability_zones.available.names[idx]
-    }
-  }
+  for_each                = toset(var.web)
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = each.value.cidr
-  availability_zone       = each.value.az
+  cidr_block              = each.value
+  availability_zone       = data.aws_availability_zones.available.names[index(var.web, each.key) % length(data.aws_availability_zones.available.names)]
   map_public_ip_on_launch = true
   tags                    = var.web_tags
 }
