@@ -3,10 +3,12 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  # This creates a map with the CIDR blocks as the keys
-  # This makes each element uniquely identifiable and independent of its position in the list.
-  web_subnets_map = { for cidr in var.web : cidr => cidr }
+  # Trim the list of AZs to match the number of CIDR blocks
+  limited_azs = slice(data.aws_availability_zones.available.names, 0, length(var.subnet_cidr_blocks))
+  # Create a map pairing each CIDR with a specific AZ
+  subnet_config = zipmap(local.limited_azs, var.subnet_cidr_blocks)
 }
+
 
 resource "aws_vpc" "main" {
   cidr_block           = var.cidr_block
@@ -17,10 +19,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = toset(var.web)
+  for_each                = local.subnet_config
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = each.key
-  availability_zone       = data.aws_availability_zones.available.names[index(var.web, each.key) % length(data.aws_availability_zones.available.names)]
+  cidr_block              = each.value
+  availability_zone       = each.key
   map_public_ip_on_launch = true
   tags                    = var.web_tags
 }
