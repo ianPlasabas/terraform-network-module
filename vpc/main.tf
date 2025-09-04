@@ -14,7 +14,7 @@ resource "aws_subnet" "web" {
   for_each                = toset(var.web)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
-  availability_zone       = each.key
+  availability_zone       = tolist(data.aws_availability_zones.available.names)[index(toset(var.web), each.value)]
   map_public_ip_on_launch = true
   tags                    = var.web_tags
 }
