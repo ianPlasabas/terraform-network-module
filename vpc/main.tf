@@ -5,7 +5,7 @@ locals {
   # Step 2: Use this new local variable in the zipmap function.
   web_subnets = zipmap(
     local.sliced_azs,
-    var.web
+    tolist(var.web)
   )
 }
 
