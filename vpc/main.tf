@@ -1,4 +1,6 @@
 locals {
+  # The number of subnets is now determined by the length of the
+  # CIDR list provided by the user.
   web_subnets = zipmap(
     data.aws_availability_zones.available.names[0:length(var.web)],
     var.web
