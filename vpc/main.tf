@@ -1,6 +1,6 @@
 locals {
   web_subnets = zipmap(
-    data.aws_availability_zones.available.names,
+    data.aws_availability_zones.available.names[0:length(var.web)],
     var.web
   )
 }
