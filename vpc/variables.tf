@@ -34,8 +34,8 @@ variable "vpc_tags" {
 
 variable "web" {
   description = "Map object for web subnet/s"
-  type        = map(string)
-  default     = {}
+  type        = set(string)
+  default     = =[]
 }
 
 variable "web_tags" {
