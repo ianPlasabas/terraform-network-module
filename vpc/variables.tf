@@ -28,14 +28,14 @@ variable "enable_dns_hostnames" {
 
 variable "vpc_tags" {
   description = "Tags for VPC"
-  type        = set(string)
+  type        = map(string)
   default     = {}
 }
 
 variable "web" {
   description = "Map object for web subnet/s"
-  type        = list(string)
-  default     = []
+  type        = set(string)
+  default     = {}
 }
 
 variable "web_tags" {
