@@ -3,7 +3,7 @@ locals {
   # and the value is a map with both the AZ name and the CIDR block.
   # The `zipmap` function is perfect for this.
   web_subnets = zipmap(
-    data.aws_availability_zones.available.names[0:3],
+    data.aws_availability_zones.available.names,
     var.web
   )
 }
