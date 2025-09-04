@@ -1,14 +1,19 @@
 output "vpc_id" {
-  description = "ID of VPC"
+  description = "The ID of the VPC"
   value       = aws_vpc.main.id
 }
 
-output "vpc_arn" {
-  description = "ARN of VPC"
-  value       = aws_vpc.main.arn
+output "web_subnet_ids" {
+  description = "The IDs of the web subnets"
+  value       = [for subnet in aws_subnet.web : subnet.id]
 }
 
-output "vpc_cidr" {
-  description = "CIDR of VPC"
-  value       = aws_vpc.main.cidr_block
+output "app_subnet_ids" {
+  description = "The IDs of the application subnets"
+  value       = [for subnet in aws_subnet.app : subnet.id]
+}
+
+output "db_subnet_ids" {
+  description = "The IDs of the database subnets"
+  value       = [for subnet in aws_subnet.db : subnet.id]
 }

@@ -2,10 +2,6 @@ variable "cidr_block" {
   description = "CIDR block for VPC"
   type        = string
   default     = "10.0.0.0/16"
-  validation {
-    condition = length(var.cidr_block) > 0
-    error_message = "Please provide a VPC CIDR"
-  }
 }
 
 variable "tenancy" {
@@ -33,37 +29,37 @@ variable "vpc_tags" {
 }
 
 variable "web" {
-  description = "Map object for web subnet/s"
-  type        = set(string)
-  default     = {}
+  description = "List of CIDR blocks for web subnets"
+  type        = list(string)
+  default     = []
 }
 
 variable "web_tags" {
-  description = "Tags for web subnet"
+  description = "Tags for web subnets"
   type        = map(string)
   default     = {}
 }
 
 variable "app" {
-  description = "Map object for app subnet/s"
-  type        = map(string)
-  default     = {}
+  description = "List of CIDR blocks for application subnets"
+  type        = list(string)
+  default     = []
 }
 
 variable "app_tags" {
-  description = "Tags for app subnet"
+  description = "Tags for application subnets"
   type        = map(string)
   default     = {}
 }
 
 variable "db" {
-  description = "Map object for db subnet/s"
-  type        = map(string)
-  default     = {}
+  description = "List of CIDR blocks for database subnets"
+  type        = list(string)
+  default     = []
 }
 
 variable "db_tags" {
-  description = "Tags for db subnet"
+  description = "Tags for database subnets"
   type        = map(string)
   default     = {}
 }
