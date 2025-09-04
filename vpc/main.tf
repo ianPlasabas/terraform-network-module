@@ -3,8 +3,9 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  # Create a map from the list, with numeric keys
-  web_subnets_map = { for idx, val in var.web : idx => val }
+  # This creates a map with the CIDR blocks as the keys
+  # This makes each element uniquely identifiable and independent of its position in the list.
+  web_subnets_map = { for cidr in var.web : cidr => cidr }
 }
 
 resource "aws_vpc" "main" {
@@ -16,7 +17,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = local.web_subnets_map
+  for_each                = toset(var.web)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = data.aws_availability_zones.available.names[index(var.web, each.value) % length(data.aws_availability_zones.available.names)]
