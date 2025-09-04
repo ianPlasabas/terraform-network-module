@@ -4,7 +4,7 @@ data "aws_availability_zones" "available" {
 
 locals {
   local_web_subnet = toset(var.web)
-  local_azs        = toset(data.aws_availability_zones.available.names[*])
+  all_azs = tolist(data.aws_availability_zones.available.names[*])
   selected_azs    = slice(local.all_azs, 0, length(var.web))
   local_subnets_by_az = zipmap(
     tolist(local.selected_azs),
