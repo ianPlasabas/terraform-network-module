@@ -35,9 +35,9 @@ variable "vpc_tags" {
 variable "subnet" {
   description = "Map object for web subnet/s"
   type        = object({
-    web = map(string)
-    app = map(string)
-    db  = map(string)
+    web = optional(map(string))
+    app = optional(map(string))
+    db  = optional(map(string))
   })
   default     = {
     web = {}
