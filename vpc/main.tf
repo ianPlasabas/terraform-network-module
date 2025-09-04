@@ -18,7 +18,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = local.web_subnets
+  for_each                = length(var.web) > 0 ? local.web_subnets:var.web
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = each.key
