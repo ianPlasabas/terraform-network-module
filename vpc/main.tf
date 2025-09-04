@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  count                   = legnth(var.web)
+  count                   = length(var.web)
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.web[count.index]
   availability_zone       = data.aws_availability_zones.available.names[count.index]
