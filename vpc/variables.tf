@@ -3,7 +3,7 @@ variable "cidr_block" {
   type        = string
   default     = "10.0.0.0/16"
   validation {
-    condition = length(var.cidr_block) == 0
+    condition = length(var.cidr_block) > 0
     error_message = "Please provide a VPC CIDR"
   }
 }
