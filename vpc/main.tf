@@ -1,9 +1,10 @@
 locals {
-  # This for expression creates a map where the key is the AZ name
-  # and the value is a map with both the AZ name and the CIDR block.
-  # The `zipmap` function is perfect for this.
+  # Step 1: Create a local variable for the sliced list of AZs.
+  sliced_azs  = slice(data.aws_availability_zones.available.names, 0, length(var.web))
+
+  # Step 2: Use this new local variable in the zipmap function.
   web_subnets = zipmap(
-    data.aws_availability_zones.available.names[0:length(var.web)],
+    local.sliced_azs,
     var.web
   )
 }
@@ -17,7 +18,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "web" {
-  for_each                = local.web_subnets
+  for_each                = var.web
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value
   availability_zone       = each.key
