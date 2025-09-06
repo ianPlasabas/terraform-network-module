@@ -32,32 +32,14 @@ variable "vpc_tags" {
   default     = {}
 }
 
-variable "web_subnet" {
-  description = "Map object for web subnet/s"
-  type        = map(string)
-  default     = {}
-}
-
-variable "web_tags" {
-  description = "Tags for web subnet/s"
-  type        = map(string)
-  default     = {}
-}
-
-variable "app_subnet" {
-  description = "Map object for app subnet/s"
-  type        = map(string)
+variable "subnets" {
+  description = "Map object for web, app, and db subnet/s"
+  type        = map(map(string))
   default     = {}
 }
 
 variable "app_tags" {
   description = "Tags for app subnet/s"
-  type        = map(string)
-  default     = {}
-}
-
-variable "db_subnet" {
-  description = "Map object for db subnet/s"
   type        = map(string)
   default     = {}
 }
