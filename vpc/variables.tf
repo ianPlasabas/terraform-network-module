@@ -38,6 +38,12 @@ variable "subnets" {
   default     = {}
 }
 
+variable "subnets" {
+  description = "Map object for web, app, and db subnet/s"
+  type        = map(map(string))
+  default     = {}
+}
+
 variable "app_tags" {
   description = "Tags for app subnet/s"
   type        = map(string)
