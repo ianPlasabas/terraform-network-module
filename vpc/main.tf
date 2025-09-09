@@ -1,15 +1,15 @@
 locals {
-  # This for expression flattens the nested map into a single map
-  # with keys like "web_subnet_10.16.16.0/20"
-  flat_subnets = {
-    for subnet_type, cidr_map in var.subnets :
-    for cidr_block, az in cidr_map :
-    "${subnet_type}_${cidr_block}" => {
-      cidr_block        = cidr_block
-      availability_zone = az
-      type              = subnet_type
+  # This flattens the nested map into a single map for for_each
+  flat_subnets = merge([
+    for subnet_type, cidr_map in var.subnets : {
+      for cidr_block, az in cidr_map :
+      "${subnet_type}_${cidr_block}" => {
+        cidr_block        = cidr_block
+        availability_zone = az
+        type              = subnet_type
+      }
     }
-  }
+  ]...)
 }
 
 resource "aws_vpc" "this" {
